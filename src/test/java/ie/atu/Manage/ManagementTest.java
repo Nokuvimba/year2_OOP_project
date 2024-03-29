@@ -1,4 +1,4 @@
-package ie.atu.Customer;
+package ie.atu.Manage;
 
 import static org.mockito.Mockito.*;
 
