@@ -10,4 +10,5 @@ public interface DatabaseInterface {
     String getData() throws SQLException;
     String getAppleData() throws SQLException;
     String getSamsungData() throws SQLException;
+    String getCustomerSelection(String selection) throws SQLException;
 }
