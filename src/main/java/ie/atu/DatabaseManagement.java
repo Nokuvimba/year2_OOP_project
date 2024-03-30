@@ -197,27 +197,29 @@ public class DatabaseManagement implements DatabaseInterface{
     public String getCustomerSelection(String selection) throws SQLException {
         StringBuilder resultBuilder = new StringBuilder();
 
+        // SQL query with a placeholder (?)
         String selectSQL = "SELECT * FROM device d " +
                 "JOIN phone_info p ON d.device_id = p.device_id " +
-                "WHERE d.device_id = selection";
+                "WHERE p.device_id = ?";
 
+        try (PreparedStatement statement = connection.prepareStatement(selectSQL)) {
+            // Set the value of the placeholder (?)
+            statement.setString(1, selection);
 
-        try (Statement statement = connection.createStatement();
-             ResultSet resultSet = statement.executeQuery(selectSQL)) {
+            // Execute the query
+            try (ResultSet resultSet = statement.executeQuery()) {
+                while (resultSet.next()) {
+                    String deviceID = resultSet.getString("device_id");
+                    String brandName = resultSet.getString("brand_name");
+                    String model = resultSet.getString("model");
+                    String storage = resultSet.getString("storage");
+                    String osName = resultSet.getString("os_name");
 
-            while (resultSet.next()) {
-                String deviceID = resultSet.getString("device_id");
-                String brandName = resultSet.getString("brand_name");
-                String model = resultSet.getString("model");
-                String storage = resultSet.getString("storage");
-                String osName = resultSet.getString("os_name");
-
-                //resultBuilder ensures all data from the SQL statement is displayed and not just the most recent
-                resultBuilder.append(deviceID).append(" ").append(brandName).append(" ").append(model).append(" ").append(storage).append(" ").append(osName).append("\n");
+                    //resultBuilder ensures all data from the SQL statement is displayed and not just the most recent
+                    resultBuilder.append(deviceID).append(" ").append(brandName).append(" ").append(model).append(" ").append(storage).append(" ").append(osName).append("\n");                }
             }
-        } catch (SQLException e) {
-            e.printStackTrace();
         }
-        return resultBuilder.toString();
+
+        return resultBuilder.toString(); //returns all database data and not just most recent
     }
 }
