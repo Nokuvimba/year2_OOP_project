@@ -168,6 +168,29 @@ public class DatabaseManagement implements DatabaseInterface{
         }
         return resultBuilder.toString();
     }
+    @Override
+    public String getCustomerData() throws SQLException{
+        StringBuilder resultBuilder = new StringBuilder();
+
+        String selectSQL = "SELECT * FROM customer d";
+
+        try (Statement statement = connection.createStatement();
+             ResultSet resultSet = statement.executeQuery(selectSQL)) {
+
+            while (resultSet.next()) {
+                String customer_id = resultSet.getString("customer_id");
+                String name = resultSet.getString("name");
+                String email = resultSet.getString("email");
+                String phone_no = resultSet.getString("phone_no");
+
+                //resultBuilder ensures all data from the SQL statement is displayed and not just the most recent
+                resultBuilder.append(customer_id).append(" ").append(name).append(" ").append(email).append(" ").append(phone_no).append("\n");
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return resultBuilder.toString();
+    }
 
     @Override
     public void connectionTest() throws SQLException {
