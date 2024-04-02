@@ -59,7 +59,7 @@ public class MainApplication{
 
                         System.out.println("Please enter password: ");
                         String passInput = scanner.next();
-                    while (adminOption != 7){
+                    while (adminOption != 8){
                         if (Objects.equals(passInput, password)) {
                             System.out.println("Welcome!");
                             System.out.println("1. View all smartphones in database");
@@ -68,7 +68,8 @@ public class MainApplication{
                             System.out.println("4. Add new customer to database");
                             System.out.println("5. Change admin password");
                             System.out.println("6. Remove customer from database");
-                            System.out.println("7. Exit to Main Menu");
+                            System.out.println("7. Update customer info");
+                            System.out.println("8. Exit to Main Menu");
                             adminOption = scanner.nextInt();
                             switch (adminOption) {
                                 case 1:
@@ -126,6 +127,13 @@ public class MainApplication{
                                     databaseManagement.deleteCustomerData(delete);
                                     break;
                                 case 7:
+                                    System.out.println("Enter customer ID of customer info to be updated: ");
+                                    int custId = scanner.nextInt();
+                                    System.out.println("Enter new email: ");
+                                    String newEmail = scanner.next();
+                                    databaseManagement.updateCustomerData(custId, newEmail);
+                                    break;
+                                case 8:
                                     System.out.println("Logged out. ");
                                     break;
                                 default:
