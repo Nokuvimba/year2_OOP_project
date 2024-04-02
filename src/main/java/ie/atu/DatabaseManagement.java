@@ -1,5 +1,7 @@
 package ie.atu;
 
+import com.mysql.cj.x.protobuf.MysqlxCrud;
+
 import java.sql.*;
 public class DatabaseManagement implements DatabaseInterface{
     private Connection connection;
@@ -254,6 +256,27 @@ public class DatabaseManagement implements DatabaseInterface{
             }
         }
 
+    }
+
+    @Override
+    public void updateCustomerData(int custId, String newEmail) throws SQLException {
+        String updateSQL = "UPDATE customer SET email = ? WHERE customer_id = ?";
+
+        try(PreparedStatement statement = connection.prepareStatement(updateSQL)) {
+            statement.setString(1, newEmail);
+            statement.setInt(2, custId);
+
+            int affectedInfo = statement.executeUpdate();
+            if(affectedInfo > 0)
+            {
+                System.out.println("Customer email updated successfully.");
+            }else{
+                System.out.println("No customer found with ID: " + custId);
+            }
+
+        }catch (SQLException e){
+            e.printStackTrace();
+        }
     }
 
     @Override
