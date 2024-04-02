@@ -36,12 +36,12 @@ public class DatabaseManagement implements DatabaseInterface{
     public void addPhoneInfoData(String storage, String os) throws SQLException {
         try {
 
-            stmt = connection.prepareStatement("INSERT INTO phone_info (device_id, info_id, storage, os_name,processor) VALUES (?, ?, ?, ?,?)");
+            stmt = connection.prepareStatement("INSERT INTO phone_info (device_id, info_id, storage, os_name) VALUES (?, ?, ?, ?)");
             stmt.setInt(1, getLastInsertId(connection));
             stmt.setInt(2, getLastInsertId(connection));
             stmt.setString(3, storage);
             stmt.setString(4, os);
-            stmt.setString(5, processor);
+
             stmt.executeUpdate();
 
             System.out.println("Insert completed successfully.");
