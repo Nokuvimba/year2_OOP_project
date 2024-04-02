@@ -35,7 +35,6 @@ public class DatabaseManagement implements DatabaseInterface{
     @Override
     public void addPhoneInfoData(String storage, String os) throws SQLException {
         try {
-
             stmt = connection.prepareStatement("INSERT INTO phone_info (device_id, info_id, storage, os_name) VALUES (?, ?, ?, ?)");
             stmt.setInt(1, getLastInsertId(connection));
             stmt.setInt(2, getLastInsertId(connection));
