@@ -217,6 +217,46 @@ public class DatabaseManagement implements DatabaseInterface{
     }
 
     @Override
+    public void deleteCustomerData(int delete) throws SQLException {  //using transactions to wrap DELETE statement to ensure all or nothing
+        String deleteStoreSQL = "DELETE FROM store WHERE customer_id = ?" ;
+        String deleteCustomerSQL = "DELETE FROM customer WHERE customer_id = ?";
+
+        try {
+            connection.setAutoCommit(false); // Start transaction
+            try (PreparedStatement statement1 = connection.prepareStatement(deleteStoreSQL);
+                 PreparedStatement statement2 = connection.prepareStatement(deleteCustomerSQL)) {
+                statement1.setInt(1, delete);
+                statement2.setInt(1, delete);
+
+                int affectedData1 = statement1.executeUpdate();
+                int affectedData2 = statement2.executeUpdate();
+
+                if (affectedData1 > 0 && affectedData2 > 0)
+                {
+                    System.out.println("Customer with ID " + delete + " deleted");
+                }else
+                {
+                    System.out.println("No customer found with ID: " + delete);
+                }
+
+                connection.commit(); // Commit transaction
+            } catch (SQLException e) {
+                connection.rollback(); // Rollback transaction on error
+                e.printStackTrace();
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        } finally {
+            try {
+                connection.setAutoCommit(true); // Reset auto-commit mode
+            } catch (SQLException e) {
+                e.printStackTrace();
+            }
+        }
+
+    }
+
+    @Override
     public String getCustomerSelection(String selection) throws SQLException {
         StringBuilder resultBuilder = new StringBuilder();
 

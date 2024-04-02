@@ -24,7 +24,7 @@ public class DatabaseManagementTest{
         //test
         databaseManagement.addDeviceData("Apple","iPhone X","1000");
 
-        try(Connection connection = DriverManager.getConnection("jbdc:mysql://localhost:3306/smartphones","root","password")) {
+        try(Connection connection = DriverManager.getConnection("jdbc:mysql://localhost:3306/smartphones","root","password")) {
            Statement statement = connection.createStatement();
            String query =" SELECT * FROM device WHERE brand_name = 'Apple' AND model = 'iPhone X' AND cost ='1000'";
                    assertTrue(statement.executeQuery(query).next()); //check if query returns anything
