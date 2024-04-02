@@ -121,6 +121,9 @@ public class MainApplication{
                                     }
                                     break;
                                 case 6:
+                                    System.out.println("Enter customer ID of customer to be removed: ");
+                                    int delete = scanner.nextInt();
+                                    databaseManagement.deleteCustomerData(delete);
                                     break;
                                 case 7:
                                     System.out.println("Logged out. ");
