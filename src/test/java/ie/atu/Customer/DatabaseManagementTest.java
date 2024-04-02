@@ -30,5 +30,24 @@ public class DatabaseManagementTest{
                    assertTrue(statement.executeQuery(query).next()); //check if query returns anything
         }
     }
+   @Test
+    public void testAddCustomerData() throws SQLException{
+        databaseManagement.addCustomerData("John Doe","john@example.com","1234567890");
 
+        try(Connection connection = DriverManager.getConnection("jdbc:mysql://localhost:3306/smartphones", "root", "password")){
+            Statement statement =connection.createStatement();
+            String query2 = "SELECT * FROM customer WHERE name = 'John Doe' AND email ='john@example.com' AND phone_no = '1234567890' ";
+            assertTrue(statement.executeQuery(query2).next());
+        }
+   }
+   @Test
+    public void testAddStoreData() throws SQLException{
+        databaseManagement.addStoreData("Store A", "123 Main Street");
+
+        try(Connection connection =DriverManager.getConnection("jdbc:mysql://localhost:3306/smartphones", "root", "password")){
+            Statement statement = connection.createStatement();
+            String query3 =" SELECT * FROM store WHERE store_name = 'Store A' AND address = '123 Main Street' ";
+            assertTrue(statement.executeQuery(query3).next());
+        }
+   }
 }
