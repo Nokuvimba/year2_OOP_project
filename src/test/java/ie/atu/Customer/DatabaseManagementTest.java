@@ -30,4 +30,15 @@ public class DatabaseManagementTest{
                    assertTrue(statement.executeQuery(query).next()); //check if query returns anything
         }
     }
+    @Test //Testing the addPhoneInfo Data
+    public void testAddPhoneInfoData() throws SQLException {
+        //test
+        databaseManagement.addPhoneInfoData("128GB","iOS");
+
+        try(Connection connection = DriverManager.getConnection("jbdc:mysql://localhost:3306/smartphones","root","password")) {
+            Statement statement = connection.createStatement();
+            String query = "SELECT * FROM phone_info WHERE storage ='128GB' AND os_name = 'iOS'";
+            assertTrue(statement.executeQuery(query).next()); //check if query returns anything
+        }
+    }
 }
