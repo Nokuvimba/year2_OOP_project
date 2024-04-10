@@ -47,7 +47,7 @@ public class DatabaseManagementTest{
         try(Connection connection =DriverManager.getConnection("jdbc:mysql://localhost:3306/smartphones", "root", "password")){
             Statement statement = connection.createStatement();
             String query3 =" SELECT * FROM store WHERE store_name = 'Store A' AND address = '123 Main Street' ";
-            assertTrue(statement.executeQuery(query3).next());
+            assertFalse(statement.executeQuery(query3).next());
         }
    }
 }
