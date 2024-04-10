@@ -63,10 +63,13 @@ public class MainApplication{
                 }
 
                 else if (option == 2) {
-
+                    option = 2;
+                    while (option == 2){
                         System.out.println("Please enter password: ");
-                        String passInput = scanner.next();
-                    while (adminOption != 8){
+                        String passInput;
+                        adminOption = 0;
+                        passInput = scanner.next();
+                    while (adminOption != 8) {
                         if (Objects.equals(passInput, password)) {
                             System.out.println("Welcome!");
                             System.out.println("1. View all smartphones in database");
@@ -147,12 +150,12 @@ public class MainApplication{
 
                                     break;
                             }
-                        }
-                        else {
+                        } else {
                             System.out.println("Wrong password...\nPlease enter correct password");
-                            adminOption = 3;
+                            adminOption = 8;
                         }
-
+                    }
+                        option = 0;
                     }
                 }
                 else if (option == 3){
