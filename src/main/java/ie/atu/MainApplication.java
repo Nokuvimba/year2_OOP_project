@@ -18,7 +18,6 @@ public class MainApplication{
         while (option != 3) {
             try {
                 DatabaseManagement databaseManagement = new DatabaseManagement(url, username, pass);
-                ShoppingCart shoppingCart = new ShoppingCart();//shopping cart instance
 
                 databaseManagement.connectionTest();
 
@@ -54,22 +53,13 @@ public class MainApplication{
                     String selection = scanner.next();
                     String customerSelection = databaseManagement.getCustomerSelection(selection);
                     System.out.println(customerSelection);
-
-                    double cost = databaseManagement.getCost(selection);
-                    String model = databaseManagement.getModel(selection);
-                    shoppingCart.addDevice(model, cost); // Assuming you have the price of the selected device
-                    shoppingCart.displayCart();
-
                 }
 
                 else if (option == 2) {
-                    option = 2;
-                    while (option == 2){
+
                         System.out.println("Please enter password: ");
-                        String passInput;
-                        adminOption = 0;
-                        passInput = scanner.next();
-                    while (adminOption != 8) {
+                        String passInput = scanner.next();
+                    while (adminOption != 8){
                         if (Objects.equals(passInput, password)) {
                             System.out.println("Welcome!");
                             System.out.println("1. View all smartphones in database");
@@ -150,12 +140,12 @@ public class MainApplication{
 
                                     break;
                             }
-                        } else {
-                            System.out.println("Wrong password...\nPlease enter correct password");
-                            adminOption = 8;
                         }
-                    }
-                        option = 0;
+                        else {
+                            System.out.println("Wrong password...\nPlease enter correct password");
+                            adminOption = 3;
+                        }
+
                     }
                 }
                 else if (option == 3){

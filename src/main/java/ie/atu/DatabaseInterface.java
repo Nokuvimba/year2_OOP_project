@@ -14,7 +14,4 @@ public interface DatabaseInterface {
     String getSamsungData() throws SQLException;
     String getCustomerData() throws SQLException;
     String getCustomerSelection(String selection) throws SQLException;
-    double getCost(String selection) throws SQLException;
-    String getModel(String selection) throws SQLException;
 }
-
