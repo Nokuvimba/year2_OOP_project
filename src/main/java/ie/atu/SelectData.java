@@ -23,9 +23,8 @@ public class SelectData {
                 String model = resultSet.getString("model");
                 String storage = resultSet.getString("storage");
                 String osName = resultSet.getString("os_name");
-                String cost = resultSet.getString("cost");
 
-                System.out.println("Name: " + brandName + ", model: " + model + ", storage: " + storage + ", OS: " + osName + "Cost: €" + cost);
+                System.out.println("Name: " + brandName + ", model: " + model + ", storage: " + storage + ", OS: " + osName);
             }
         } catch (SQLException e) {
             e.printStackTrace();

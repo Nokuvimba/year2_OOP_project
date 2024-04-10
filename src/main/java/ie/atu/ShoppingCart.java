@@ -23,7 +23,7 @@ public class ShoppingCart {
     public void displayCart(){
         System.out.println("Devices in your cart: ");
         for(int i =0; i< devices.size(); i++){
-            System.out.println((i+1) + ". " + devices.get(i) + " $" + prices.get(i));
+            System.out.println((i+1) + ". " + devices.get(i) + " -$" + prices.get(i));
         }
         System.out.println("Total :$" + totalCost());
     }
