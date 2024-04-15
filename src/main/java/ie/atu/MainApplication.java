@@ -21,6 +21,7 @@ public class MainApplication{
                 DatabaseManagement databaseManagement = new DatabaseManagement(url, username, pass);
                 ShoppingCart shoppingCart = new ShoppingCart();//shopping cart instance
 
+                //tests connection to database at the beginning of the application
                 databaseManagement.connectionTest();
 
                 System.out.println("\nWelcome to Natalie's cell store!");
