@@ -27,6 +27,7 @@ public class MainApplication{
                 System.out.println("1. Customer Log In\n2. Admin Log In\n3. Exit");
                 option = scanner.nextInt();
 
+                int buyMore = 1;
                 if (option == 1) {
                     String name, email, phoneNo;
                     System.out.println("Enter your name: ");
@@ -38,27 +39,31 @@ public class MainApplication{
                     databaseManagement.addCustomerData(name, email, phoneNo);
                     System.out.println("Welcome: " + name + "\n" + email + "\n" + phoneNo);
 
-                    System.out.println("1. Apple Menu \n2. Samsung");
-                    int menuOption = scanner.nextInt();
+                    while (buyMore==1) {
+                        System.out.println("1. Apple Menu \n2. Samsung");
+                        int menuOption = scanner.nextInt();
 
-                    if (menuOption == 1) {
-                        String appleData = databaseManagement.getAppleData();
-                        System.out.println("Apple Data from database: ");
-                        System.out.println(appleData);
-                    }
-                    else if (menuOption == 2) {
-                        String samsungData = databaseManagement.getSamsungData();
-                        System.out.println("Samsung Data from database: ");
-                        System.out.println(samsungData);
-                    }
-                    System.out.println("Select device id for the device you want to add to cart:");
-                    String selection = scanner.next();
-                    String customerSelection = databaseManagement.getCustomerSelection(selection);
-                    System.out.println(customerSelection);
+                        if (menuOption == 1) {
+                            String appleData = databaseManagement.getAppleData();
+                            System.out.println("Apple Data from database: ");
+                            System.out.println(appleData);
+                        } else if (menuOption == 2) {
+                            String samsungData = databaseManagement.getSamsungData();
+                            System.out.println("Samsung Data from database: ");
+                            System.out.println(samsungData);
+                        }
+                        System.out.println("Select device id for the device you want to add to cart:");
+                        String selection = scanner.next();
+                        String customerSelection = databaseManagement.getCustomerSelection(selection);
+                        System.out.println(customerSelection);
 
-                    double cost = databaseManagement.getCost(selection);
-                    String model = databaseManagement.getModel(selection);
-                    shoppingCart.addDevice(model, cost); // Assuming you have the price of the selected device
+                        double cost = databaseManagement.getCost(selection);
+                        String model = databaseManagement.getModel(selection);
+                        shoppingCart.addDevice(model, cost); // Assuming you have the price of the selected device
+                        System.out.println("If you wish to select more devices press 1, If you wish to check out press 0");
+                         buyMore = scanner.nextInt();
+                    }
+
                     shoppingCart.displayCart();
 
                 }
