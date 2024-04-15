@@ -19,6 +19,7 @@ public class MainApplication{
         while (option != 3) {
             try {
                 DatabaseManagement databaseManagement = new DatabaseManagement(url, username, pass);
+                ShoppingCart shoppingCart = new ShoppingCart();//shopping cart instance
 
                 databaseManagement.connectionTest();
 
@@ -54,6 +55,12 @@ public class MainApplication{
                     String selection = scanner.next();
                     String customerSelection = databaseManagement.getCustomerSelection(selection);
                     System.out.println(customerSelection);
+
+                    double cost = databaseManagement.getCost(selection);
+                    String model = databaseManagement.getModel(selection);
+                    shoppingCart.addDevice(model, cost); // Assuming you have the price of the selected device
+                    shoppingCart.displayCart();
+
                 }
 
                 else if (option == 2) {
