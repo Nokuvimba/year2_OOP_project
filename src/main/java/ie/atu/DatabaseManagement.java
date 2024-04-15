@@ -301,12 +301,67 @@ public class DatabaseManagement implements DatabaseInterface{
                     String model = resultSet.getString("model");
                     String storage = resultSet.getString("storage");
                     String osName = resultSet.getString("os_name");
+                    String cost = resultSet.getString("cost");
 
                     //resultBuilder ensures all data from the SQL statement is displayed and not just the most recent
-                    resultBuilder.append(deviceID).append(" ").append(brandName).append(" ").append(model).append(" ").append(storage).append(" ").append(osName).append("\n");                }
+                    resultBuilder.append(deviceID).append(" ").append(brandName).append(" ").append(model).append(" ").append(storage).append(" ").append(osName).append(" ").append(cost).append("\n");                }
             }
         }
 
         return resultBuilder.toString(); //returns all database data and not just most recent
     }
+
+    @Override
+    public double getCost(String selection) throws SQLException {
+        StringBuilder resultBuilder = new StringBuilder();
+
+        double price = 0.0; // Initialize price variable
+
+        // SQL query with a placeholder (?)
+        String selectSQL = "SELECT * FROM device d " +
+                "JOIN phone_info p ON d.device_id = p.device_id " +
+                "WHERE p.device_id = ?";
+
+        try (PreparedStatement statement = connection.prepareStatement(selectSQL)) {
+            // Set the value of the placeholder (?)
+            statement.setString(1, selection);
+
+            // Execute the query
+            try (ResultSet resultSet = statement.executeQuery()) {
+                while (resultSet.next()) {
+                    price = resultSet.getDouble("cost");
+
+                    //resultBuilder ensures all data from the SQL statement is displayed and not just the most recent
+                    resultBuilder.append(price).append("\n");                }
+            }
+        }
+
+        return price; //returns all database data and not just most recent
+    }
+    @Override
+    public String getModel(String selection) throws SQLException {
+        StringBuilder resultBuilder = new StringBuilder();
+
+        // SQL query with a placeholder (?)
+        String selectSQL = "SELECT * FROM device d " +
+                "JOIN phone_info p ON d.device_id = p.device_id " +
+                "WHERE p.device_id = ?";
+
+        try (PreparedStatement statement = connection.prepareStatement(selectSQL)) {
+            // Set the value of the placeholder (?)
+            statement.setString(1, selection);
+
+            // Execute the query
+            try (ResultSet resultSet = statement.executeQuery()) {
+                while (resultSet.next()) {
+                    String dID = resultSet.getString("model");
+
+                    //resultBuilder ensures all data from the SQL statement is displayed and not just the most recent
+                    resultBuilder.append(dID).append("\n");                }
+            }
+        }
+
+        return resultBuilder.toString(); //returns all database data and not just most recent
+    }
+
 }
