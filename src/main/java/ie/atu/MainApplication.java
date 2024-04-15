@@ -15,6 +15,9 @@ public class MainApplication{
         int option = 0;
         int adminOption = 0;
         int passUpdate = 0;
+        int buyMoreFlag = 0;
+        int selectionFlag = 0;
+
         Scanner scanner = new Scanner(System.in);
         while (option != 3) {
             try {
@@ -41,6 +44,7 @@ public class MainApplication{
                     System.out.println("Welcome: " + name + "\n" + email + "\n" + phoneNo);
 
                     while (buyMore==1) {
+                        buyMoreFlag = 0;
                         System.out.println("1. Apple Menu \n2. Samsung");
                         int menuOption = scanner.nextInt();
 
@@ -48,24 +52,56 @@ public class MainApplication{
                             String appleData = databaseManagement.getAppleData();
                             System.out.println("Apple Data from database: ");
                             System.out.println(appleData);
+                            selectionFlag = 1;
+                            buyMore = 2;
                         } else if (menuOption == 2) {
                             String samsungData = databaseManagement.getSamsungData();
                             System.out.println("Samsung Data from database: ");
                             System.out.println(samsungData);
+                            selectionFlag = 2;
+                            buyMore = 2;
                         }
-                        System.out.println("Select device id for the device you want to add to cart:");
-                        String selection = scanner.next();
-                        String customerSelection = databaseManagement.getCustomerSelection(selection);
-                        System.out.println(customerSelection);
+                        else {
+                            System.out.println("Invalid Entry!\n");
+                            buyMore = 1;
+                        }
+                        if (buyMore == 2) {
+                            System.out.println("Select device id for the device you want to add to cart:");
+                            String selection = scanner.next();
+                            int num = Integer.parseInt(selection);
 
-                        double cost = databaseManagement.getCost(selection);
-                        String model = databaseManagement.getModel(selection);
-                        shoppingCart.addDevice(model, cost); // Assuming you have the price of the selected device
-                        System.out.println("If you wish to select more devices press 1, If you wish to check out press 0");
-                         buyMore = scanner.nextInt();
+                            if (selectionFlag == 1 && num > 18) {
+                                System.out.println("");
+                            }
+                            if (selectionFlag == 2 && num < 19){
+
+                            }
+                            String customerSelection = databaseManagement.getCustomerSelection(selection);
+                            System.out.println(customerSelection);
+
+                            double cost = databaseManagement.getCost(selection);
+                            String model = databaseManagement.getModel(selection);
+                            shoppingCart.addDevice(model, cost); // Assuming you have the price of the selected device
+                            while (buyMoreFlag == 0) {
+                                System.out.println("If you wish to select more devices press 1, If you wish to check out press 0");
+                                buyMore = scanner.nextInt();
+                                if (buyMore == 0) {
+                                    shoppingCart.displayCart();
+                                    buyMoreFlag = 1;
+                                }
+                                else if (buyMore == 1){
+                                    buyMoreFlag = 1;
+                                    buyMore = 1;
+                                }
+                                else {
+                                    System.out.println("Invalid Entry!\n");
+                                    buyMoreFlag = 0;
+                                }
+                            }
+                        }
                     }
 
-                    shoppingCart.displayCart();
+
 
                 }
 
