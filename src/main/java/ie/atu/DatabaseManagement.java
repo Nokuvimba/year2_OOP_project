@@ -35,7 +35,7 @@ public class DatabaseManagement implements DatabaseInterface{
     @Override
     public void addPhoneInfoData(String storage, String os) throws SQLException {
         try {
-
+            // Insert a new record into the "phone_info" table
             stmt = connection.prepareStatement("INSERT INTO phone_info (device_id, info_id, storage, os_name) VALUES (?, ?, ?, ?)");
             stmt.setInt(1, getLastInsertId(connection));
             stmt.setInt(2, getLastInsertId(connection));
@@ -55,7 +55,7 @@ public class DatabaseManagement implements DatabaseInterface{
     @Override
     public void addCustomerData(String custName, String email, String phoneNo) throws SQLException {
         try {
-
+            // Insert a new record into the "customer" table
             stmt = connection.prepareStatement("INSERT INTO customer (customer_id, name, email, phone_no) VALUES (?, ?, ?, ?)");
             stmt.setInt(1, getLastInsertId(connection));
             stmt.setString(2, custName);
@@ -74,7 +74,7 @@ public class DatabaseManagement implements DatabaseInterface{
     @Override
     public void addStoreData(String storeName, String address) throws SQLException {
         try {
-
+            // Insert a new record into the "store" table
             stmt = connection.prepareStatement("INSERT INTO store (store_id, device_id, customer_id, store_name, address) VALUES (?, ?, ?, ?, ?)");
             stmt.setInt(1, getLastInsertId(connection));
             stmt.setInt(2, getLastInsertId(connection));
@@ -93,6 +93,7 @@ public class DatabaseManagement implements DatabaseInterface{
 
     @Override
     public String getData() throws SQLException {
+        //returns everything from the device & phone_info table
         StringBuilder resultBuilder = new StringBuilder();
 
         String selectSQL = "SELECT * FROM device d " +
@@ -119,6 +120,7 @@ public class DatabaseManagement implements DatabaseInterface{
 
     @Override
     public String getAppleData() throws SQLException {
+        //returns everything from the device & phone_info table where the brand is Apple
         StringBuilder resultBuilder = new StringBuilder();
 
         String selectSQL = "SELECT * FROM device d " +
@@ -147,6 +149,7 @@ public class DatabaseManagement implements DatabaseInterface{
 
     @Override
     public String getSamsungData() throws SQLException {
+        //returns everything from the device & phone_info table where the brand is Samsung
         StringBuilder resultBuilder = new StringBuilder();
 
         String selectSQL = "SELECT * FROM device d " +
@@ -173,6 +176,7 @@ public class DatabaseManagement implements DatabaseInterface{
     }
     @Override
     public String getCustomerData() throws SQLException{
+        //returns everything from customer
         StringBuilder resultBuilder = new StringBuilder();
 
         String selectSQL = "SELECT * FROM customer d";
@@ -197,6 +201,7 @@ public class DatabaseManagement implements DatabaseInterface{
 
     @Override
     public void connectionTest() throws SQLException {
+        //tests connection to the database
         try
         {
             // Load the driver class
@@ -210,6 +215,7 @@ public class DatabaseManagement implements DatabaseInterface{
     }
 
     private static int getLastInsertId(Connection conn) throws SQLException {
+        //This method retrieves the last inserted ID from a database connection
         Statement stmt = conn.createStatement();
         ResultSet rs = stmt.executeQuery("SELECT LAST_INSERT_ID()");
         rs.next();
@@ -220,7 +226,8 @@ public class DatabaseManagement implements DatabaseInterface{
     }
 
     @Override
-    public void deleteCustomerData(int delete) throws SQLException {  //using transactions to wrap DELETE statement to ensure all or nothing
+    public void deleteCustomerData(int delete) throws SQLException {
+        //using transactions to wrap DELETE statement to ensure all or nothing
         String deleteStoreSQL = "DELETE FROM store WHERE customer_id = ?" ;
         String deleteCustomerSQL = "DELETE FROM customer WHERE customer_id = ?";
 
@@ -261,6 +268,7 @@ public class DatabaseManagement implements DatabaseInterface{
 
     @Override
     public void updateCustomerData(int custId, String newEmail) throws SQLException {
+        //updates customer email of certain customer when corresponding customer_id is entered
         String updateSQL = "UPDATE customer SET email = ? WHERE customer_id = ?";
 
         try(PreparedStatement statement = connection.prepareStatement(updateSQL)) {
