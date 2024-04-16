@@ -71,10 +71,12 @@ public class MainApplication{
                             int num = Integer.parseInt(selection);
 
                             if (selectionFlag == 1 && num > 18) {
-                                System.out.println("");
+                                System.out.println("Invalid device ID entered!\n");
+                                buyMore = 1;
                             }
                             if (selectionFlag == 2 && num < 19){
-
+                                System.out.println("Invalid device ID entered!\n");
+                                buyMore = 1;
                             }
                             String customerSelection = databaseManagement.getCustomerSelection(selection);
                             System.out.println(customerSelection);
