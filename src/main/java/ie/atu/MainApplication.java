@@ -32,6 +32,7 @@ public class MainApplication{
                 option = scanner.nextInt();
 
                 int buyMore = 1;
+                int invalid = 0;
                 if (option == 1) {
                     String name, email, phoneNo;
                     System.out.println("Enter your name: ");
@@ -45,6 +46,7 @@ public class MainApplication{
 
                     while (buyMore==1) {
                         buyMoreFlag = 0;
+                        invalid = 0;
                         System.out.println("1. Apple Menu \n2. Samsung");
                         int menuOption = scanner.nextInt();
 
@@ -70,34 +72,37 @@ public class MainApplication{
                             String selection = scanner.next();
                             int num = Integer.parseInt(selection);
 
-                            if (selectionFlag == 1 && num > 18) {
+                            if (selectionFlag == 1 && num > 18 ) {
                                 System.out.println("Invalid device ID entered!\n");
                                 buyMore = 1;
+                                invalid = 1;
                             }
-                            if (selectionFlag == 2 && num < 19){
+                            if (selectionFlag == 2 && (num < 19 || num > 31)){
                                 System.out.println("Invalid device ID entered!\n");
                                 buyMore = 1;
+                                invalid = 1;
                             }
-                            String customerSelection = databaseManagement.getCustomerSelection(selection);
-                            System.out.println(customerSelection);
 
-                            double cost = databaseManagement.getCost(selection);
-                            String model = databaseManagement.getModel(selection);
-                            shoppingCart.addDevice(model, cost); // Assuming you have the price of the selected device
-                            while (buyMoreFlag == 0) {
-                                System.out.println("If you wish to select more devices press 1, If you wish to check out press 0");
-                                buyMore = scanner.nextInt();
-                                if (buyMore == 0) {
-                                    shoppingCart.displayCart();
-                                    buyMoreFlag = 1;
-                                }
-                                else if (buyMore == 1){
-                                    buyMoreFlag = 1;
-                                    buyMore = 1;
-                                }
-                                else {
-                                    System.out.println("Invalid Entry!\n");
-                                    buyMoreFlag = 0;
+                            if (invalid == 0) {
+                                String customerSelection = databaseManagement.getCustomerSelection(selection);
+                                System.out.println(customerSelection);
+
+                                double cost = databaseManagement.getCost(selection);
+                                String model = databaseManagement.getModel(selection);
+                                shoppingCart.addDevice(model, cost); // Assuming you have the price of the selected device
+                                while (buyMoreFlag == 0) {
+                                    System.out.println("If you wish to select more devices press 1, If you wish to check out press 0");
+                                    buyMore = scanner.nextInt();
+                                    if (buyMore == 0) {
+                                        shoppingCart.displayCart();
+                                        buyMoreFlag = 1;
+                                    } else if (buyMore == 1) {
+                                        buyMoreFlag = 1;
+                                        buyMore = 1;
+                                    } else {
+                                        System.out.println("Invalid Entry!\n");
+                                        buyMoreFlag = 0;
+                                    }
                                 }
                             }
                         }
@@ -117,12 +122,11 @@ public class MainApplication{
                                 System.out.println("Welcome!");
                                 System.out.println("1. View all smartphones in database");
                                 System.out.println("2. View all customers in database");
-                                System.out.println("3. Add new phone to database");
-                                System.out.println("4. Add new customer to database");
-                                System.out.println("5. Change admin password");
-                                System.out.println("6. Remove customer from database");
-                                System.out.println("7. Update customer info");
-                                System.out.println("8. Exit to Main Menu");
+                                System.out.println("3. Add new customer to database");
+                                System.out.println("4. Change admin password");
+                                System.out.println("5. Remove customer from database");
+                                System.out.println("6. Update customer info");
+                                System.out.println("7. Exit to Main Menu");
                                 adminOption = scanner.nextInt();
                                 switch (adminOption) {
                                     case 1:
@@ -136,16 +140,6 @@ public class MainApplication{
                                         System.out.println(customerData);
                                         break;
                                     case 3:
-                                        System.out.println("Enter phone details.");
-                                        System.out.println("Brand Name: ");
-                                        String brandName = scanner.next();
-                                        System.out.println("Model: ");
-                                        String model = scanner.next();
-                                        System.out.println("cost: ");
-                                        String cost = scanner.next();
-                                        databaseManagement.addDeviceData(brandName, model, cost);
-                                        break;
-                                    case 4:
                                         System.out.println("Enter name: ");
                                         String name = scanner.next();
                                         System.out.println("Enter Email: ");
@@ -155,7 +149,7 @@ public class MainApplication{
                                         databaseManagement.addCustomerData(name, email, phoneNo);
                                         System.out.println("Customer Added Successfully");
                                         break;
-                                    case 5:
+                                    case 4:
                                         int passCount = 0;
                                         while (passCount == 0) {
                                             System.out.println("Enter current password: ");
@@ -183,19 +177,19 @@ public class MainApplication{
                                             }
                                         }
                                         break;
-                                    case 6:
+                                    case 5:
                                         System.out.println("Enter customer ID of customer to be removed: ");
                                         int delete = scanner.nextInt();
                                         databaseManagement.deleteCustomerData(delete);
                                         break;
-                                    case 7:
+                                    case 6:
                                         System.out.println("Enter customer ID of customer info to be updated: ");
                                         int custId = scanner.nextInt();
                                         System.out.println("Enter new email: ");
                                         String newEmail = scanner.next();
                                         databaseManagement.updateCustomerData(custId, newEmail);
                                         break;
-                                    case 8:
+                                    case 7:
                                         System.out.println("Logged out. ");
                                         option = 0;
                                         break;
