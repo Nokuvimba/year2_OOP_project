@@ -241,7 +241,7 @@ public class DatabaseManagement implements DatabaseInterface{
                 int affectedData1 = statement1.executeUpdate();
                 int affectedData2 = statement2.executeUpdate();
 
-                if (affectedData1 > 0 && affectedData2 > 0)
+                if (affectedData1 == 0 && affectedData2 == 1)
                 {
                     System.out.println("Customer with ID " + delete + " deleted");
                 }else
